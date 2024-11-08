@@ -1,0 +1,21 @@
+.movie-poster {
+  box-shadow: rgba(0, 0, 0, 0.24) 0 3px 8px;
+  width: 45vw;
+  cursor: pointer;
+}
+
+.movie-poster-placeholder {
+  aspect-ratio: 0.66;
+}
+
+@media(min-width: 425px) {
+  .movie-poster {
+    width: 20vw;
+  }
+}
+
+@media(min-width: 768px) {
+  .movie-poster {
+    width: 16vw;
+  }
+}

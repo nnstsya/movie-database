@@ -1,0 +1,32 @@
+@if(isSmallScreen$ | async) {
+   <ngb-pagination [collectionSize]="collectionSize()"
+                   [(page)]="currentPage"
+                   (pageChange)="changePage($event)"
+                   [maxSize]="5"
+                   [rotate]="true"
+                   [boundaryLinks]="true"
+                   size="sm"
+                   class="w-100 d-flex justify-content-center">
+   </ngb-pagination>
+} @else {
+  <ngb-pagination [collectionSize]="collectionSize()"
+                  [(page)]="currentPage"
+                  (pageChange)="changePage($event)"
+                  [maxSize]="5"
+                  [rotate]="true"
+                  [boundaryLinks]="true"
+                  class="w-100 d-flex justify-content-center">
+    <ng-template ngbPaginationFirst>
+      <ng-container>First</ng-container>
+    </ng-template>
+    <ng-template ngbPaginationPrevious>
+      <ng-container>Previous</ng-container>
+    </ng-template>
+    <ng-template ngbPaginationNext>
+      <ng-container>Next</ng-container>
+    </ng-template>
+    <ng-template ngbPaginationLast>
+      <ng-container>Last</ng-container>
+    </ng-template>
+  </ngb-pagination>
+}

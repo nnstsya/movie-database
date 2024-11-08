@@ -1,0 +1,32 @@
+<div class="w-100 vh-100 d-flex flex-column align-items-center py-5 px-sm-5 px-4">
+  <div class="d-flex flex-column w-100 py-5">
+    <h2 class="text-secondary mt-2 py-3 fw-light">My favorite</h2>
+    @if(!favoriteMovies.length) {
+      <p>You have no favorite movies yet.</p>
+    } @else {
+      <div class="gap-5 row justify-content-center">
+        @for(movie of favoriteMovies; track movie.id) {
+          <div class="col-12 row favorite-movie-card d-flex gap-sm-5 gap-4 p-0">
+            @if(movie.poster_path) {
+              <img [src]="getPosterUrl(movie.poster_path)" alt="{{ movie.title }}" class="col-5 movie-poster p-0 bg-dark rounded object-fit-contain h-100" (click)="openMovieModal(favoriteMovies.indexOf(movie))">
+            } @else {
+              <div (click)="openMovieModal(favoriteMovies.indexOf(movie))"
+                   class="col-5 movie-poster movie-poster-placeholder bg-dark rounded object-fit-contain h-100 bg-secondary p-2 d-flex justify-content-center align-items-center">
+                <p class="text-white text-center">{{movie.title}}</p>
+              </div>
+            }
+            <div class="row col-md-6 col-5 gap-sm-3 gap-1 movie-info p-0">
+              <div class="col-12 row justify-content-between h-25">
+                <h3 class="col-lg-6 col-12 p-0">{{ movie.title }}</h3>
+                <button (click)="removeFromFavorites(movie)" class="btn btn-outline-secondary col-lg-6 col-12 remove-favourite-btn">
+                  <p class="m-0">Unfavorite</p>
+                </button>
+              </div>
+              <p class="col-12 p-0 movie-overview">{{ movie.overview }}</p>
+            </div>
+          </div>
+        }
+      </div>
+    }
+  </div>
+</div>

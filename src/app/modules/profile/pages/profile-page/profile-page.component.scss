@@ -1,0 +1,32 @@
+.movie-info {
+  height: fit-content;
+}
+
+.remove-favourite-btn {
+  width: fit-content;
+  height: fit-content;
+}
+
+.movie-poster {
+  box-shadow: rgba(0, 0, 0, 0.24) 0 3px 8px;
+  cursor: pointer;
+}
+
+.movie-poster-placeholder {
+  aspect-ratio: 0.66;
+}
+
+@media(max-width: 568px) {
+  .movie-overview {
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+}
+
+@media(min-width: 768px) {
+  .movie-poster {
+    width: 300px;
+  }
+}
