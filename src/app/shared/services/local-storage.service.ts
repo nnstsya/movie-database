@@ -1,4 +1,4 @@
-import { Injectable, signal, WritableSignal } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { MovieModel } from '@models/movie.model';
 
 @Injectable({
@@ -27,9 +27,9 @@ export class LocalStorageService {
     localStorage.setItem(this.favouritesStorageKey, JSON.stringify(favorites));
   }
 
-  getCurrentPage(): WritableSignal<number> {
+  getCurrentPage(): number {
     const currentPage = localStorage.getItem(this.currentPageStorageKey);
-    return currentPage ? signal(Number(currentPage)) : signal(1);
+    return currentPage ? +currentPage : 1;
   }
 
   updateCurrentPage(page: number): void {

@@ -1,32 +1,32 @@
-.movie-info {
+.favorites__info {
   height: fit-content;
 }
 
-.remove-favourite-btn {
+.favorites__unfavorite-btn {
   width: fit-content;
   height: fit-content;
 }
 
-.movie-poster {
+.favorites__poster {
   box-shadow: rgba(0, 0, 0, 0.24) 0 3px 8px;
   cursor: pointer;
 }
 
-.movie-poster-placeholder {
+.favorites__poster--placeholder {
   aspect-ratio: 0.66;
 }
 
-@media(max-width: 568px) {
-  .movie-overview {
+@media(max-width: 768px) {
+  .favorites__overview {
     display: -webkit-box;
-    -webkit-line-clamp: 4;
+    -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
 }
 
-@media(min-width: 768px) {
-  .movie-poster {
+@media(min-width: 786px) {
+  .favorites__poster {
     width: 300px;
   }
 }

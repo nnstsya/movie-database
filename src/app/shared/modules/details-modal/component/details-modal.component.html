@@ -1,0 +1,113 @@
+<app-header (click)="handleCloseModal()"></app-header>
+<ng-container *ngIf="currentMovie$ | async as currentMovie">
+  <div class="modal d-flex bg-dark flex-column align-items-center w-100 px-md-5 px-3 position-relative text-white gap-md-5 py-5">
+    <div class="modal__background-wrapper position-absolute w-100 h-100 z-0" [style.background-image]="'url(' + getBackgroundUrl(currentMovie.backdrop_path) + ')'"></div>
+    <div class="z-1 position-relative w-100 d-flex align-items-center gap-2 mb-5">
+      <app-modal-header class="w-100"
+                        [moviePosition]="getMoviePosition()"
+                        (closeModal)="handleCloseModal()"
+                        (nextMovie)="handleNextMovie()"
+                        (prevMovie)="handlePrevMovie()"
+      ></app-modal-header>
+    </div>
+    <ng-container *ngIf="!(isMediumScreen$ | async); else modalForSmallerScreens">
+      <div class="w-md-75 w-100 row d-flex position-relative gap-5 justify-content-center">
+        <ng-container *ngIf="currentMovie.poster_path; else posterPlaceholder">
+          <img class="modal__poster rounded col-4 col-xl-2 p-0" [src]="getPosterUrl(currentMovie.poster_path)" alt="{{ currentMovie.title }}">
+        </ng-container>
+        <ng-template #posterPlaceholder>
+          <div class="modal__poster rounded col-4 col-xl-2 d-flex movie-poster--placeholder justify-content-center align-items-center">
+            <p>{{currentMovie.title}}</p>
+          </div>
+        </ng-template>
+        <div class="col-7 row justify-content-between modal__details gap-3">
+          <div class="d-flex justify-content-between gap-3">
+            <h2 class="modal__title align-self-end">{{ currentMovie.title }}</h2>
+            <ng-container *ngIf="!isInFavorites(currentMovie); else unfavoriteButton">
+              <button type="button" class="btn btn-outline-secondary modal__favorite-button mb-4" (click)="addToFavorites(currentMovie)">Add to favorite</button>
+            </ng-container>
+            <ng-template #unfavoriteButton>
+              <button type="button" class="btn btn-outline-secondary modal__favorite-button mb-4" (click)="removeFromFavorites(currentMovie)">Unfavorite</button>
+            </ng-template>
+          </div>
+          <div class="d-flex gap-3">
+            <p class="mb-0">
+              <strong>Score:</strong>
+              {{ currentMovie.vote_average }}
+            </p>
+            <div class="vr"></div>
+            <p class="mb-0">
+              <strong>Rating:</strong>
+              {{ currentMovie.adult ? 'R' : 'PG' }}
+            </p>
+            <div class="vr"></div>
+            <p class="mb-0">
+              <strong>Release Date:</strong>
+              {{ currentMovie.release_date | date:'mediumDate' }}
+            </p>
+          </div>
+          <ng-container *ngIf="currentMovie.overview">
+            <hr>
+            <p #overviewText class="modal__overview-text" [ngClass]="{ 'modal__overview--collapsed': isExpanded }">
+              {{ currentMovie.overview }}
+            </p>
+            <span *ngIf="isOverflowing" class="toggle-text" (click)="toggleExpanded()">
+              {{ isExpanded ? 'Show Less' : 'Show More' }}
+            </span>
+            <hr>
+          </ng-container>
+        </div>
+      </div>
+    </ng-container>
+    <ng-template #modalForSmallerScreens>
+      <div class="w-md-75 w-100 d-flex flex-column position-relative gap-3 m-0">
+        <div class="row w-100 justify-content-center gap-4 m-0">
+          <ng-container *ngIf="currentMovie.poster_path; else posterPlaceholder">
+            <img class="modal__poster rounded col-6 col-sm-4 object-fit-contain p-0" [src]="getPosterUrl(currentMovie.poster_path)" alt="{{ currentMovie.title }}">
+          </ng-container>
+          <ng-template #posterPlaceholder>
+            <div class="modal__poster col-6 col-sm-4 rounded object-fit-contain movie-poster--placeholder d-flex justify-content-center align-items-center">
+              <p>{{currentMovie.title}}</p>
+            </div>
+          </ng-template>
+          <div class="col-5 p-0 m-0">
+            <div class="p-0 d-flex flex-column gap-3">
+              <p class="mb-0">
+                Score:
+                <br>
+                <strong>{{ currentMovie.vote_average }}</strong>
+              </p>
+              <p class="mb-0">
+                Rating:
+                <br>
+                <strong>{{ currentMovie.adult ? 'R' : 'G' }}</strong>
+              </p>
+              <p class="mb-0">
+                Release Date:
+                <br>
+                <strong>{{ currentMovie.release_date | date:'mediumDate' }}</strong>
+              </p>
+            </div>
+            <div class="favorite-container">
+              <ng-container *ngIf="!isInFavorites(currentMovie); else unfavoriteButton">
+                <i class="bi bi-star display-2 modal__favorite-button" (click)="addToFavorites(currentMovie)"></i>
+              </ng-container>
+              <ng-template #unfavoriteButton>
+                <i class="bi bi-star-fill display-2 modal__favorite-button" (click)="removeFromFavorites(currentMovie)"></i>
+              </ng-template>
+            </div>
+          </div>
+        </div>
+        <div class="d-flex flex-column gap-2 pt-4 px-0">
+          <h1 class="modal__title m-0">{{ currentMovie.title }}</h1>
+          <ng-container *ngIf="currentMovie.overview">
+            <hr>
+            <p class="modal__overview">{{ currentMovie.overview }}</p>
+            <hr>
+          </ng-container>
+        </div>
+      </div>
+    </ng-template>
+  </div>
+</ng-container>
+

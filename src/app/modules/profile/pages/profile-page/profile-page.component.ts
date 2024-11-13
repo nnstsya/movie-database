@@ -6,31 +6,31 @@ import { LocalStorageService } from '@shared/services/local-storage.service';
 @Component({
   selector: 'app-profile-page',
   templateUrl: './profile-page.component.html',
-  styleUrls: ['./profile-page.component.scss']
+  styleUrls: ['./profile-page.component.css']
 })
 export class ProfilePageComponent implements OnInit {
   favoriteMovies: MovieModel[] = [];
 
   constructor(private localStorageService: LocalStorageService, private detailsModalService: DetailsModalService) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.loadFavorites();
   }
 
-  loadFavorites() {
+  loadFavorites(): void {
     this.favoriteMovies = this.localStorageService.getFavorites();
   }
 
-  removeFromFavorites(movie: MovieModel) {
+  removeFromFavorites(movie: MovieModel): void {
     this.localStorageService.removeFavorite(movie);
     this.loadFavorites();
   }
 
-  getPosterUrl(posterPath: string) {
+  getPosterUrl(posterPath: string): string {
     return `http://image.tmdb.org/t/p/w300${posterPath}`;
   }
 
-  openMovieModal(index: number) {
+  openMovieModal(index: number): void {
     this.detailsModalService.open(this.favoriteMovies, index);
   }
 }

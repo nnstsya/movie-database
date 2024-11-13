@@ -2,14 +2,14 @@ import { Injectable } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { BehaviorSubject, map, Observable } from 'rxjs';
 import { MovieModel } from '@models/movie.model';
-import { DetailsModalComponent } from '@shared/components/details-modal/details-modal.component';
+import { DetailsModalComponent } from '@shared/modules/details-modal/component/details-modal.component';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DetailsModalService {
   private movies: MovieModel[] = [];
-  private currentMovieIndex$ = new BehaviorSubject<number>(0);
+  private currentMovieIndex$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
   private modalRef!: NgbModalRef;
 
   constructor(private modalService: NgbModal) {}
@@ -49,5 +49,13 @@ export class DetailsModalService {
     return this.currentMovieIndex$.asObservable().pipe(
       map(index => this.movies[index])
     );
+  }
+
+  hasNext(): boolean {
+    return this.currentMovieIndex$.value < this.movies.length - 1;
+  }
+
+  hasPrev(): boolean {
+    return this.currentMovieIndex$.value > 0;
   }
 }

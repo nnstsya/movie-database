@@ -3,29 +3,34 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { API_KEY } from '@tokens/environment.token';
-import { environment } from './environments/environment';
+import { API_KEY, BASE_URL } from '@tokens/environment.token';
+import { environment } from '@environments/environment';
 import { HttpClientModule } from '@angular/common/http';
-import { HomeModule } from '@modules/home/home.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { HeaderComponent } from '@shared/components/header/header.component';
 import { RouterModule } from '@angular/router';
+import { HeaderModule } from '@shared/modules/header/header.module';
 
 @NgModule({
   declarations: [
     AppComponent,
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        HttpClientModule,
-        HomeModule,
-        NgbModule,
-        HeaderComponent,
-      RouterModule
-    ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule,
+    NgbModule,
+    HeaderModule,
+    RouterModule
+  ],
   providers: [
-    {provide: API_KEY, useValue: environment.apiKey}
+    {
+      provide: API_KEY,
+      useValue: environment.apiKey
+    },
+    {
+      provide: BASE_URL,
+      useValue: environment.baseUrl
+    }
   ],
   bootstrap: [AppComponent]
 })

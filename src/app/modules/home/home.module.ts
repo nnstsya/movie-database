@@ -1,13 +1,15 @@
 import { NgModule } from '@angular/core';
 
 import { HomePageComponent } from '@modules/home/pages/home-page/home-page.component';
-import { MoviesService } from '@shared/services/movies.service';
-import { AsyncPipe } from '@angular/common';
+import { MoviesService } from '@modules/home/services/movies.service';
+import { AsyncPipe, NgForOf, NgIf } from '@angular/common';
 import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
-import { HeaderComponent } from '@shared/components/header/header.component';
-import { PaginationComponent } from '@shared/components/pagination/pagination.component';
-import { DetailsModalComponent } from '@shared/components/details-modal/details-modal.component';
 import { RouterModule } from '@angular/router';
+import { HeaderModule } from '@shared/modules/header/header.module';
+import { PaginationModule } from '@shared/modules/pagination/pagination.module';
+import { DetailsModalModule } from '@shared/modules/details-modal/details-modal.module';
+import { UrlInterceptor } from '@modules/home/interceptors/url.interceptor';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -16,18 +18,26 @@ import { RouterModule } from '@angular/router';
   imports: [
     AsyncPipe,
     NgbTooltip,
-    HeaderComponent,
-    PaginationComponent,
-    DetailsModalComponent,
+    HeaderModule,
+    PaginationModule,
+    DetailsModalModule,
     RouterModule.forChild([
       {
         path: '',
         component: HomePageComponent
       }
     ]),
+    NgIf,
+    NgForOf,
+    HttpClientModule,
   ],
   providers: [
-    MoviesService
+    MoviesService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: UrlInterceptor,
+      multi: true
+    }
   ]
 })
 export class HomeModule { }

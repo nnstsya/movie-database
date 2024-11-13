@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { map, Observable, of } from 'rxjs';
 import { MovieModel, MovieResponseModel } from '@models/movie.model';
-import { MoviesService } from '@shared/services/movies.service';
+import { MoviesService } from '@modules/home/services/movies.service';
 import { DetailsModalService } from '@shared/services/details-modal.service';
 
 @Component({
   selector: 'app-home-page',
   templateUrl: './home-page.component.html',
-  styleUrl: './home-page.component.scss'
+  styleUrl: './home-page.component.css'
 })
 export class HomePageComponent implements OnInit {
   movies$: Observable<MovieResponseModel> = of(<MovieResponseModel>{});
@@ -15,21 +15,21 @@ export class HomePageComponent implements OnInit {
   currentPage: number = 1;
   collectionSize: number = 0;
 
-  openMovieModal(index: number) {
-    this.detailsModalService.open(this.movies, index);
-  }
-
   constructor(private moviesService: MoviesService, private detailsModalService: DetailsModalService) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.loadMovies(this.currentPage);
   }
 
-  getPosterUrl(posterPath: string) {
+  openMovieModal(index: number): void {
+    this.detailsModalService.open(this.movies, index);
+  }
+
+  getPosterUrl(posterPath: string): string {
     return `http://image.tmdb.org/t/p/w300${posterPath}`
   }
 
-  loadMovies(page: number) {
+  loadMovies(page: number): void {
     this.movies$ = this.moviesService.getAll(page).pipe(
       map((response => {
         this.collectionSize = response.total_results / 10;

@@ -28,3 +28,5 @@ type ShowDuration = {
   maximum: string;
   minimum: string;
 }
+
+export type MoviePosition = 'first' | 'middle' | 'last' | 'only';
