@@ -1,0 +1,8 @@
+.header {
+  background-color: #464c58;
+}
+
+.header__menu-item {
+  font-size: 18px;
+  cursor: pointer;
+}

@@ -1,0 +1,34 @@
+<div class="w-100 vh-100 d-flex flex-column align-items-center py-5 px-sm-5 px-3">
+  <div class="d-flex flex-column w-100 py-5">
+    <h2 class="text-secondary mt-2 py-3 fw-light">My favorite</h2>
+    <ng-container *ngIf="favoriteMovies.length; else noMoviesMessage">
+      <div class="gap-5 row justify-content-center">
+        <ng-container *ngFor="let movie of favoriteMovies">
+          <div class="col-12 row favorites__card m-0 d-flex px-2 gap-3 gap-md-5">
+            <ng-container *ngIf="movie.poster_path; else posterPlaceholder">
+              <img [src]="getPosterUrl(movie.poster_path)" alt="{{ movie.title }}" class="col-5 favorites__poster p-0 bg-dark rounded object-fit-contain h-100" (click)="openMovieModal(favoriteMovies.indexOf(movie))">
+            </ng-container>
+            <ng-template #posterPlaceholder>
+              <div (click)="openMovieModal(favoriteMovies.indexOf(movie))"
+                   class="col-5 favorites__poster favorites__poster--placeholder bg-dark rounded object-fit-contain h-100 bg-secondary p-2 d-flex justify-content-center align-items-center">
+                <p class="text-white text-center">{{movie.title}}</p>
+              </div>
+            </ng-template>
+            <div class="row col-6 gap-sm-3 gap-1 favorites__info m-0 p-0">
+              <div class="col-12 row justify-content-between h-25">
+                <h5 class="col-lg-6 col-12 p-0">{{ movie.title }}</h5>
+                <button (click)="removeFromFavorites(movie)" class="btn btn-outline-secondary col-lg-6 col-12 favorites__unfavorite-btn">
+                  <p class="m-0">Unfavorite</p>
+                </button>
+              </div>
+              <p class="col-12 p-0 favorites__overview">{{ movie.overview }}</p>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </ng-container>
+    <ng-template #noMoviesMessage>
+      <p>You have no favorite movies yet.</p>
+    </ng-template>
+  </div>
+</div>

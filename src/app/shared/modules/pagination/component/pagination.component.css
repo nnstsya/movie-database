@@ -1,0 +1,26 @@
+:host {
+  ::ng-deep .page-link {
+    background: none;
+    color: #39b694;
+  }
+
+  ::ng-deep .page-item.active {
+    background-color: #39b694;
+  }
+
+  ::ng-deep .page-item.active .page-link {
+    color: white;
+  }
+
+  ::ng-deep .page-item:hover {
+    background-color: #39b694;
+  }
+
+  ::ng-deep .page-item.disabled {
+    background-color: #d3d3d3;
+  }
+
+  ::ng-deep .page-link:hover {
+    color: white;
+  }
+}
