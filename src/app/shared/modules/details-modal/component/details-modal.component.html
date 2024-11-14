@@ -1,5 +1,5 @@
-<app-header (click)="handleCloseModal()"></app-header>
-<ng-container *ngIf="currentMovie$ | async as currentMovie">
+<app-header class="position-relative page__header"></app-header>
+<ng-container *ngIf="currentMovie$ |  async as currentMovie">
   <div class="modal d-flex bg-dark flex-column align-items-center w-100 px-md-5 px-3 position-relative text-white gap-md-5 py-5">
     <div class="modal__background-wrapper position-absolute w-100 h-100 z-0" [style.background-image]="'url(' + getBackgroundUrl(currentMovie.backdrop_path) + ')'"></div>
     <div class="z-1 position-relative w-100 d-flex align-items-center gap-2 mb-5">
@@ -80,7 +80,7 @@
               <p class="mb-0">
                 Rating:
                 <br>
-                <strong>{{ currentMovie.adult ? 'R' : 'G' }}</strong>
+                <strong>{{ currentMovie.adult ? 'R' : 'PG' }}</strong>
               </p>
               <p class="mb-0">
                 Release Date:

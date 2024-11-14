@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MoviePosition } from '@models/movie.model';
 
 @Component({
@@ -7,11 +7,11 @@ import { MoviePosition } from '@models/movie.model';
   styleUrls: ['./modal-header.component.css']
 })
 export class ModalHeaderComponent {
-  @Input() moviePosition: MoviePosition = 'middle';
+  @Input() moviePosition: MoviePosition = MoviePosition.ONLY;
 
-  @Output() closeModal = new EventEmitter<void>();
-  @Output() nextMovie = new EventEmitter<void>();
-  @Output() prevMovie = new EventEmitter<void>();
+  @Output() closeModal: EventEmitter<void> = new EventEmitter<void>();
+  @Output() nextMovie: EventEmitter<void> = new EventEmitter<void>();
+  @Output() prevMovie: EventEmitter<void> = new EventEmitter<void>();
 
   onCloseModal(): void {
     this.closeModal.emit();
@@ -24,4 +24,6 @@ export class ModalHeaderComponent {
   onNextMovie(): void {
     this.nextMovie.emit();
   }
+
+  protected readonly MoviePosition = MoviePosition;
 }

@@ -1,5 +1,5 @@
 <div [ngSwitch]="moviePosition">
-  <div *ngSwitchCase="'first'" class="modal__header">
+  <div *ngSwitchCase="MoviePosition.FIRST" class="modal__header">
     <h3 class="modal__header-button" (click)="onCloseModal()">
       <i class="bi bi-arrow-left-circle"></i>
       <span class="text-lg">Back to list</span>
@@ -11,7 +11,7 @@
       <i class="bi bi-arrow-right-circle"></i>
     </h3>
   </div>
-  <div *ngSwitchCase="'middle'" class="modal__header">
+  <div *ngSwitchCase="MoviePosition.MIDDLE" class="modal__header">
     <h3 class="modal__header-button" (click)="onPrevMovie()">
       <i class="bi bi-arrow-left-circle"></i>
       <span class="text-lg">Previous Movie</span>
@@ -23,7 +23,7 @@
       <i class="bi bi-arrow-right-circle"></i>
     </h3>
   </div>
-  <div *ngSwitchCase="'last'" class="modal__header">
+  <div *ngSwitchCase="MoviePosition.LAST" class="modal__header">
     <h3 class="modal__header-button" (click)="onPrevMovie()">
       <i class="bi bi-arrow-left-circle"></i>
       <span class="text-lg">Previous Movie</span>
@@ -35,7 +35,7 @@
       <i class="bi bi-arrow-right-circle"></i>
     </h3>
   </div>
-  <div *ngSwitchCase="'only'" class="modal__header">
+  <div *ngSwitchCase="MoviePosition.ONLY" class="modal__header">
     <h3 class="modal__header-button" (click)="onCloseModal()">
       <i class="bi bi-arrow-left-circle"></i>
       <span class="text-lg">Back to list</span>

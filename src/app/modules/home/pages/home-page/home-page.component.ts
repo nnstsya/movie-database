@@ -1,21 +1,29 @@
-import { Component, OnInit } from '@angular/core';
-import { map, Observable, of } from 'rxjs';
+import { ChangeDetectionStrategy, Component, DestroyRef, OnInit } from '@angular/core';
+import { catchError, delay, map, Observable, of } from 'rxjs';
 import { MovieModel, MovieResponseModel } from '@models/movie.model';
-import { MoviesService } from '@modules/home/services/movies.service';
+import { MoviesService } from '@shared/services/movies.service';
 import { DetailsModalService } from '@shared/services/details-modal.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { LoaderService } from '@shared/services/loader.service';
 
 @Component({
   selector: 'app-home-page',
   templateUrl: './home-page.component.html',
-  styleUrl: './home-page.component.css'
+  styleUrl: './home-page.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HomePageComponent implements OnInit {
-  movies$: Observable<MovieResponseModel> = of(<MovieResponseModel>{});
   movies: MovieModel[] = [];
   currentPage: number = 1;
   collectionSize: number = 0;
+  isLoading$: Observable<boolean> = this.loaderService.isLoading$;
 
-  constructor(private moviesService: MoviesService, private detailsModalService: DetailsModalService) {}
+  constructor(
+    private moviesService: MoviesService,
+    private detailsModalService: DetailsModalService,
+    private destroyRef: DestroyRef,
+    private loaderService: LoaderService
+  ) {}
 
   ngOnInit(): void {
     this.loadMovies(this.currentPage);
@@ -30,17 +38,26 @@ export class HomePageComponent implements OnInit {
   }
 
   loadMovies(page: number): void {
-    this.movies$ = this.moviesService.getAll(page).pipe(
+    this.loaderService.setLoading(true);
+    this.moviesService.getAll(page).pipe(
+      delay(200),
       map((response => {
         this.collectionSize = response.total_results / 10;
         this.movies = response.results;
-        return response;
-      }))
-    );
+        this.loaderService.setLoading(false);
+      })),
+      takeUntilDestroyed(this.destroyRef),
+      catchError(() => {
+        this.loaderService.setLoading(false);
+        return of(<MovieResponseModel>{});
+      })
+    ).subscribe();
   }
 
   onPageChange(newPage: number): void {
-    this.currentPage = newPage;
-    this.loadMovies(newPage);
+    if (this.currentPage !== newPage) {
+      this.currentPage = newPage;
+      this.loadMovies(newPage);
+    }
   }
 }

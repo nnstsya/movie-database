@@ -1,7 +1,14 @@
 <section class="d-flex justify-content-between p-4 header">
   <div class="d-flex align-items-center">
     <i class="bi bi-film text-white mx-2"></i>
-    <p class="text-white m-0 header__menu-item" routerLink="">Movies</p>
+    <p class="text-white m-0 header__menu-item" routerLink="" (click)="closeModal()">Movies</p>
   </div>
-  <button type="button" class="btn btn-outline-secondary text-white header__menu-item" routerLink="/profile">My Account</button>
+  <div ngbDropdown class="d-inline-block">
+    <button type="button" class="btn btn-outline-secondary text-white header__menu-item" ngbDropdownToggle>
+      My Account
+    </button>
+    <div ngbDropdownMenu>
+      <button ngbDropdownItem routerLink="/favorite" (click)="closeModal()">Favorite Movies</button>
+    </div>
+  </div>
 </section>

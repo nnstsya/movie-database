@@ -1,10 +1,4 @@
-import {
-  AfterViewChecked,
-  ChangeDetectorRef,
-  Component,
-  ElementRef,
-  ViewChild
-} from '@angular/core';
+import { AfterViewChecked, ChangeDetectorRef, Component, ElementRef, ViewChild } from '@angular/core';
 import { MovieModel, MoviePosition } from '@models/movie.model';
 import { fromEvent, map, Observable, startWith } from 'rxjs';
 import { DetailsModalService } from '@shared/services/details-modal.service';
@@ -24,7 +18,6 @@ export class DetailsModalComponent implements AfterViewChecked {
   isMediumScreen$: Observable<boolean> = fromEvent(window, 'resize').pipe(
     startWith({ target: window }),
     map((value) => {
-      this.cdr.markForCheck();
       return (value.target as Window).visualViewport!.width <= 768 || (value.target as Window).innerWidth <= 768;
     }),
   );
@@ -58,13 +51,13 @@ export class DetailsModalComponent implements AfterViewChecked {
 
   getMoviePosition(): MoviePosition {
     if(this.modalService.hasPrev() && this.modalService.hasNext()) {
-      return 'middle';
+      return MoviePosition.MIDDLE;
     } else if(this.modalService.hasNext()) {
-      return 'first';
+      return MoviePosition.FIRST;
     } else if(this.modalService.hasPrev()) {
-      return 'last';
+      return MoviePosition.LAST;
     }
-    return 'only';
+    return MoviePosition.ONLY;
   }
 
   getPosterUrl(posterPath: string): string {
@@ -99,6 +92,6 @@ export class DetailsModalComponent implements AfterViewChecked {
   }
 
   isInFavorites(movie: MovieModel): boolean {
-    return !!this.localStorageService.getFavorites().filter((favMovie) => favMovie.id === movie.id).length;
+    return !!this.localStorageService.getFavorites().find((favMovie) => favMovie.id === movie.id);
   }
 }

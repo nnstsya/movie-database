@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { BehaviorSubject, map, Observable } from 'rxjs';
+import { BehaviorSubject, map, Observable, switchMap } from 'rxjs';
 import { MovieModel } from '@models/movie.model';
 import { DetailsModalComponent } from '@shared/modules/details-modal/component/details-modal.component';
+import { MoviesService } from '@shared/services/movies.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,7 @@ export class DetailsModalService {
   private currentMovieIndex$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
   private modalRef!: NgbModalRef;
 
-  constructor(private modalService: NgbModal) {}
+  constructor(private modalService: NgbModal, private moviesService: MoviesService) {}
 
   open(movies: MovieModel[], startIndex: number = 0): void {
     this.movies = movies;
@@ -32,14 +33,14 @@ export class DetailsModalService {
   }
 
   nextMovie(): void {
-    const newIndex = this.currentMovieIndex$.value + 1;
+    const newIndex: number = this.currentMovieIndex$.value + 1;
     if (newIndex < this.movies.length) {
       this.currentMovieIndex$.next(newIndex);
     }
   }
 
   prevMovie(): void {
-    const newIndex = this.currentMovieIndex$.value - 1;
+    const newIndex: number = this.currentMovieIndex$.value - 1;
     if (newIndex >= 0) {
       this.currentMovieIndex$.next(newIndex);
     }
@@ -47,7 +48,10 @@ export class DetailsModalService {
 
   getCurrentMovie(): Observable<MovieModel> {
     return this.currentMovieIndex$.asObservable().pipe(
-      map(index => this.movies[index])
+      map(index => {
+        return this.movies[index].id;
+      }),
+      switchMap(id => this.moviesService.getById(id))
     );
   }
 

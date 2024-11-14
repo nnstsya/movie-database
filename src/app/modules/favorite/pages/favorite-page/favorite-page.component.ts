@@ -4,11 +4,11 @@ import { DetailsModalService } from '@shared/services/details-modal.service';
 import { LocalStorageService } from '@shared/services/local-storage.service';
 
 @Component({
-  selector: 'app-profile-page',
-  templateUrl: './profile-page.component.html',
-  styleUrls: ['./profile-page.component.css']
+  selector: 'app-favorite-page',
+  templateUrl: './favorite-page.component.html',
+  styleUrls: ['./favorite-page.component.css']
 })
-export class ProfilePageComponent implements OnInit {
+export class FavoritePageComponent implements OnInit {
   favoriteMovies: MovieModel[] = [];
 
   constructor(private localStorageService: LocalStorageService, private detailsModalService: DetailsModalService) {}

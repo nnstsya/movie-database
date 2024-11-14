@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { fromEvent, map, Observable, startWith } from 'rxjs';
 import { LocalStorageService } from '@shared/services/local-storage.service';
 
@@ -12,17 +12,15 @@ export class PaginationComponent implements OnInit{
   @Output() pageChange: EventEmitter<number> = new EventEmitter<number>();
 
   currentPage: number = 1;
-  isInitialLoad: boolean = true;
 
   isSmallScreen$: Observable<boolean> = fromEvent(window, 'resize').pipe(
     startWith({ target: window }),
     map((value) => {
-      this.cdr.markForCheck();
       return (value.target as Window).visualViewport!.width <= 576 || (value.target as Window).innerWidth <= 576
     }),
   );
 
-  constructor(private localStorageService: LocalStorageService, private cdr: ChangeDetectorRef) {}
+  constructor(private localStorageService: LocalStorageService) {}
 
   ngOnInit(): void {
     this.currentPage = this.localStorageService.getCurrentPage();
@@ -30,11 +28,6 @@ export class PaginationComponent implements OnInit{
   }
 
   changePage(newPage: number): void {
-    if (this.isInitialLoad) {
-      this.isInitialLoad = false;
-      return;
-    }
-
     this.currentPage = newPage;
     this.localStorageService.updateCurrentPage(newPage);
     this.pageChange.emit(newPage);

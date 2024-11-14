@@ -7,8 +7,8 @@ const routes: Routes = [
     loadChildren: () => import('./modules/home/home.module').then(m => m.HomeModule),
   },
   {
-    path: 'profile',
-    loadChildren: () => import('./modules/profile/profile.module').then(m => m.ProfileModule),
+    path: 'favorite',
+    loadChildren: () => import('./modules/favorite/favorite.module').then(m => m.FavoriteModule),
   },
   {
     path: '**',

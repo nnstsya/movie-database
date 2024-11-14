@@ -1,5 +1,6 @@
 <ng-container *ngIf="!(isSmallScreen$ | async); else paginationForSmallerScreens" >
-  <ngb-pagination [collectionSize]="collectionSize"
+  <ngb-pagination *ngIf="collectionSize"
+                  [collectionSize]="collectionSize"
                   [(page)]="currentPage"
                   (pageChange)="changePage($event)"
                   [maxSize]="5"
@@ -22,10 +23,11 @@
 </ng-container>
 
 <ng-template #paginationForSmallerScreens>
-  <ngb-pagination [collectionSize]="collectionSize"
+  <ngb-pagination *ngIf="collectionSize"
+                  [collectionSize]="collectionSize"
                   [(page)]="currentPage"
                   (pageChange)="changePage($event)"
-                  [maxSize]="5"
+                  [maxSize]="2"
                   [rotate]="true"
                   [boundaryLinks]="true"
                   size="sm"

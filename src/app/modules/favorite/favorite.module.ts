@@ -1,23 +1,22 @@
 import { NgModule } from '@angular/core';
 
-import { ProfilePageComponent } from '@modules/profile/pages/profile-page/profile-page.component';
+import { FavoritePageComponent } from '@modules/favorite/pages/favorite-page/favorite-page.component';
 import { RouterModule } from '@angular/router';
 import { NgForOf, NgIf } from '@angular/common';
 
 @NgModule({
   declarations: [
-    ProfilePageComponent,
+    FavoritePageComponent,
   ],
   imports: [
     RouterModule.forChild([
       {
         path: '',
-        component: ProfilePageComponent
+        component: FavoritePageComponent
       }
     ]),
     NgForOf,
     NgIf,
-  ],
-  providers: []
+  ]
 })
-export class ProfileModule { }
+export class FavoriteModule { }

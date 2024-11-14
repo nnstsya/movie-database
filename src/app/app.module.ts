@@ -5,10 +5,11 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { API_KEY, BASE_URL } from '@tokens/environment.token';
 import { environment } from '@environments/environment';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RouterModule } from '@angular/router';
 import { HeaderModule } from '@shared/modules/header/header.module';
+import { UrlInterceptor } from '@interceptors/url.interceptor';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,12 @@ import { HeaderModule } from '@shared/modules/header/header.module';
     {
       provide: BASE_URL,
       useValue: environment.baseUrl
-    }
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: UrlInterceptor,
+      multi: true
+    },
   ],
   bootstrap: [AppComponent]
 })

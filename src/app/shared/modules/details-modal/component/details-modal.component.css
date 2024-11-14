@@ -16,6 +16,10 @@
   flex: 1;
 }
 
+.page__header {
+  z-index: 9999;
+}
+
 .modal__poster {
   box-shadow: rgba(0, 0, 0, 0.24) 0 3px 8px;
   height: fit-content;

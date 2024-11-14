@@ -29,4 +29,9 @@ type ShowDuration = {
   minimum: string;
 }
 
-export type MoviePosition = 'first' | 'middle' | 'last' | 'only';
+export enum MoviePosition {
+  FIRST = "FIRST",
+  MIDDLE = "MIDDLE",
+  LAST = "LAST",
+  ONLY = "ONLY"
+}
