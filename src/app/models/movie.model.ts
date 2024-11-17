@@ -30,8 +30,8 @@ type ShowDuration = {
 }
 
 export enum MoviePosition {
-  FIRST = "FIRST",
-  MIDDLE = "MIDDLE",
-  LAST = "LAST",
-  ONLY = "ONLY"
+  FIRST = 'first',
+  MIDDLE = 'middle',
+  LAST = 'last',
+  ONLY = 'only'
 }

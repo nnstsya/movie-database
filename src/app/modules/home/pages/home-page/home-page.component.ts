@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, DestroyRef, OnInit } from '@angular/core';
+import { Component, DestroyRef, OnInit } from '@angular/core';
 import { catchError, delay, map, Observable, of } from 'rxjs';
 import { MovieModel, MovieResponseModel } from '@models/movie.model';
 import { MoviesService } from '@shared/services/movies.service';
@@ -9,8 +9,7 @@ import { LoaderService } from '@shared/services/loader.service';
 @Component({
   selector: 'app-home-page',
   templateUrl: './home-page.component.html',
-  styleUrl: './home-page.component.css',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrl: './home-page.component.css'
 })
 export class HomePageComponent implements OnInit {
   movies: MovieModel[] = [];
