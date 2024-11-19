@@ -1,0 +1,42 @@
+.modal__header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.modal__header-button {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  gap: 40px;
+  margin: 0;
+  font-weight: lighter;
+  stroke-width: 1px;
+  transition: font-weight 0.1s ease-in;
+}
+
+.modal__header-button:hover {
+  font-weight: normal;
+}
+
+.text-sm {
+  display: none;
+}
+
+.text-lg {
+  display: inline;
+}
+
+@media (max-width: 1024px) {
+  .text-lg {
+    display: none;
+  }
+
+  .text-sm {
+    display: inline;
+  }
+
+  .modal__header-button {
+    gap: 24px;
+  }
+}

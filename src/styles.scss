@@ -1,1 +1,26 @@
-/* You can add global styles to this file, and also import other style files */
+
+@import "bootstrap-icons/font/bootstrap-icons.css";
+@import 'bootstrap/scss/bootstrap';
+
+* {
+  font-family: "DM Sans", serif;
+}
+
+p {
+  font-size: 18px;
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  h2 {
+    font-size: 30px;
+  }
+
+  h3 {
+    font-size: 24px;
+  }
+
+  p {
+    font-size: 16px;
+  }
+}

@@ -1,0 +1,29 @@
+<app-loader *ngIf="isLoading$ | async; else movieList"></app-loader>
+<ng-template #movieList>
+  <article class="d-flex gap-4 w-100 flex-column px-4 px-sm-5 py-5">
+    <h2 class="text-secondary mt-5 pt-3">Latest releases</h2>
+    <section class="row justify-content-between row-gap-2 row-gap-sm-4 row-gap-lg-5 column-gap-2">
+      <ng-container *ngIf="movies">
+        <ng-container *ngFor="let movie of movies">
+          <ng-container *ngIf="movie.poster_path; else posterPlaceholder">
+            <div class="movie-poster p-0 bg-dark rounded col-6 col-sm-2 d-flex align-items-center justify-content-center">
+              <img [src]="getPosterUrl(movie.poster_path)"
+                   (click)="openMovieModal(movies.indexOf(movie))"
+                   placement="top"
+                   class="movie-poster object-fit-contain rounded"
+                   [ngbTooltip]="movie.title"
+                   [alt]="movie.title">
+            </div>
+          </ng-container>
+          <ng-template #posterPlaceholder>
+            <div (click)="openMovieModal(movies.indexOf(movie))"
+                 class="movie-poster movie-poster-placeholder col-6 col-sm-2 rounded bg-secondary object-fit-contain p-2 d-flex justify-content-center align-items-center">
+              <p class="text-white text-center">{{movie.title}}</p>
+            </div>
+          </ng-template>
+        </ng-container>
+      </ng-container>
+    </section>
+  </article>
+  <app-pagination [collectionSize]="collectionSize" (pageChange)="onPageChange($event)"></app-pagination>
+</ng-template>
